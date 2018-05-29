@@ -11,6 +11,11 @@ pipeline {
         echo "${TEST_USER_PSW}"
       }
     }
+    stage('Checkpoint') {
+      steps {
+        checkpoint 'Checkpoint'
+      }
+    }
     stage('Testing') {
       failFast true
       parallel {
@@ -34,30 +39,6 @@ pipeline {
         }
       }
     }
-    stage('Wait for ') {
-      steps {
-        echo 'Continuing Deployment'
-        input 'Should we continue'
-      }
-    }
-    stage('Get Kernel') {
-      steps {
-        script {
-          try {
-            KERNEL_VERSION = sh (script: "uname -r", returnStdout: true)
-          } catch(err) {
-            echo "CAUGHT ERROR: ${err}"
-            throw err
-          }
-        }
-        
-      }
-    }
-    stage('Say Kernel') {
-      steps {
-        echo "${KERNEL_VERSION}"
-      }
-    }
   }
   environment {
     MY_NAME = 'Prayag'
@@ -71,6 +52,6 @@ pipeline {
     
   }
   parameters {
-    string(name: 'Name', defaultValue: 'Prayag Patel', description: 'Who should I say hi to?')
+    string(name: 'Name', defaultValue: 'whoever you are', description: 'Who should I say hi to?')
   }
 }
