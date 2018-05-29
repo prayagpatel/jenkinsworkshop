@@ -11,6 +11,20 @@ pipeline {
         echo "${TEST_USER_PSW}"
       }
     }
+    stage('Wait for ') {
+      steps {
+        echo 'Continuing Deployment'
+        input 'Should we continue'
+      }
+    }
+    stage('Deploy') {
+      input {
+        message 'Should we continue?'
+      }
+      steps {
+        echo 'Continuing with deployment'
+      }
+    }
   }
   environment {
     MY_NAME = 'Prayag'
